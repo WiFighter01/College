@@ -5,7 +5,7 @@
 Для слова из словаря, записанного в последней строке, определите его синоним.
 '''
 words = {}
-x= int(input())
+x = int(input())
 for i in range(x):
     words.update([input().split()])
 value = input()
@@ -14,4 +14,3 @@ for key in words:
         print(key)
     elif key == value:
         print(words[key])
-
