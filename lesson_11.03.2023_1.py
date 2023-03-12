@@ -55,7 +55,16 @@ def test_convfrom10():
         print('test5 - ok')
     else:
         print('test5 - fail')
-    # еще должны быть тесты на nbase > 10, аргументы - не целые(можно сделать как Д/З)
+    # test6 - nbace > 10
+    if convfrom10(2, 16) == 'второй аргумент - целое число >= 2 и < 10':
+        print('test6 - ok')
+    else:
+        print('test6 - fail')
+    # test7 - dnum не целое чило
+    if convfrom10(2.2, 16) == 'первый аргумент - целое неотрицательное число':
+        print('test7 - ok')
+    else:
+        print('test7 - fail')
 
 
 if __name__ == '__main__':
