@@ -3,7 +3,7 @@ class Person:
         self.name = n
         self.phnum = pn
         self.eadr = ea
-        self.adr = Address()  # - композиция
+        # self.adr = Address()  # - композиция
         # self.adr = a - агрегация
 
     def pppass(self, ):
