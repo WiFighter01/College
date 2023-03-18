@@ -26,7 +26,8 @@ class Address:
 
 
 class Student(Person):
-    def __init__(self, student_number: int = None, average_mark: int = None):
+    def __init__(self, name: str, student_number: int = None, average_mark: int = None):
+        super().__init__(name)
         self.student_number = student_number
         self.average_mark = average_mark
 
@@ -38,7 +39,8 @@ class Student(Person):
 
 
 class Professor(Person):
-    def __init__(self, salary: float = None):
+    def __init__(self, name: str, salary: float = None):
+        super().__init__(name)
         self.salary = salary
 
 
@@ -49,6 +51,7 @@ def main():
     student1 = Student(777, 5)
     student1.name = 'Ivan'  # Можем создать атрибут из родительского класса
     student1.phnum = 880055545  # Можем создать атрибут из родительского класса
+    student2 = Student()
     professor1 = Professor(50000)
     adr1 = Address('Lenina', 'Moscow', 'Moscow area', '117152', 'RU')
     p = Person('Dima')
