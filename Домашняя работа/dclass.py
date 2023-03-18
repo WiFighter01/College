@@ -48,18 +48,15 @@ def main():
     print('Вызов конструктора')
     tom = Person('Tom')
     bill = Person('Bill', '+79851190555', '123@gmail.com')  # На самом деле вызываются __new__ __init__
-    student1 = Student(777, 5)
-    student1.name = 'Ivan'  # Можем создать атрибут из родительского класса
-    student1.phnum = 880055545  # Можем создать атрибут из родительского класса
-    student2 = Student()
-    professor1 = Professor(50000)
+    student1 = Student('Kolya', 777, 5)
+    professor1 = Professor('Ivan Vasilievich', 200000)
     adr1 = Address('Lenina', 'Moscow', 'Moscow area', '117152', 'RU')
     p = Person('Dima')
     p.adr = adr1
     print(tom.name, tom.phnum, tom.eadr)
     print(bill.name, bill.phnum, bill.eadr)
     print(student1.name, student1.phnum, student1.student_number, student1.average_mark)
-    print(professor1.salary)
+    print(professor1.name, professor1.salary)
     print(adr1.city, adr1.state, adr1.street)
     print(p.name, p.adr.city, p.adr.country)
 
