@@ -26,29 +26,33 @@
 ddict = {}
 for i in range(int(input())):
     key, tire, *words = input().split()
-    wordsn = []
+    wordsn = []  # удаляем из словаря запятые
     for word in words:
         if ',' in word:
             word = word.replace(',', '')
         wordsn.append(word)
     ddict[key] = wordsn
-latinwords = []
+latinwords = []  # Создаем список со значениями из словаря
 for key in ddict:
     latinwords.append(ddict.get(key))
-sort_latinwords = sorted(latinwords)
-set_latinwords = set()
+sort_latinwords = sorted(latinwords)  # Сортируем список со значениями
+set_latinwords = set()  # Создаем множиство с нашими знаяениями, чтобы не было дубликатов
 for i in range(len(sort_latinwords)):
     for j in range(len(sort_latinwords[i])):
         set_latinwords.add(sort_latinwords[i][j])
-sort_latinwords = sorted(set_latinwords)
+sort_latinwords = sorted(set_latinwords) # Создаем отсортированный список со значениями из множества
 itog_dict = {}
 for i in range(len(sort_latinwords)):
-    for key in ddict:
-        if itog_dict.get(sort_latinwords[i], False) is False:
-            itog_dict[sort_latinwords[i]] = [key]
-        else:
-            itog_dict[sort_latinwords[i]].append(key)
+    for j in range(len(ddict)):
+        for key in ddict:
+            x = ddict.get(key)
+            z = []
+            if sort_latinwords[i] in x:
+                z.append(key)
+
+            # if itog_dict.get(sort_latinwords[i]) is not None:
+            #     itog_dict[sort_latinwords[i]] = [key]
+            # else:
+            #     itog_dict[sort_latinwords[i]].append(key)
 print(itog_dict)
-
-
 
