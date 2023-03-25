@@ -8,12 +8,14 @@ def matrix(n: int, m: int, a: int = 1, b: int = 3):
     '''
     return [[randint(a, b) for i in range(m)] for j in range(n)]
 
+
 def print_m(a):
     '''
     Печатаем матрицу а по строкам
     '''
     for str_m in a:
         print(*str_m)
+
 
 def sum_m(a, b):
     '''
@@ -26,6 +28,7 @@ def sum_m(a, b):
             res[i].append(a[i][j] + b[i][j])
     return res
 
+
 def minus_m(a, b):
     '''
     Вычитаем матрицы a и b
@@ -36,6 +39,7 @@ def minus_m(a, b):
         for j in range(len(a[i])):
             res[i].append(a[i][j] - b[i][j])
     return res
+
 
 def mult_m(a, b):
     '''
@@ -51,6 +55,7 @@ def mult_m(a, b):
                 res[i][j] += a[i][x] * b[x][j]
     return res
 
+
 def mult_m_2(a, b: int):
     '''
     Перемножаем матрицу a на число b
@@ -60,59 +65,74 @@ def mult_m_2(a, b: int):
             a[i][j] *= b
     return a
 
+
 def opred_2(a):
     '''
     Вычисляем определитель второго порядка для квадратной матрицы a
     '''
-    res = a[0][0]*a[1][1] - a[0][1]*a[1][0]
+    res = a[0][0] * a[1][1] - a[0][1] * a[1][0]
     return res
+
 
 def opred_3(a):
     '''
     Вычисляем определитель третьего порядка для квадратной матрицы a
     '''
-    res = (a[0][0]*a[1][1]*a[2][2] + a[1][0]*a[2][1]*a[0][2] + a[0][1]*a[1][2]*a[2][0]) - \
-          (a[0][2]*a[1][1]*a[2][0] + a[2][1]*a[1][2]*a[0][0] + a[1][0]*a[0][1]*a[2][2])
+    res = (a[0][0] * a[1][1] * a[2][2] + a[1][0] * a[2][1] * a[0][2] + a[0][1] * a[1][2] * a[2][0]) - \
+          (a[0][2] * a[1][1] * a[2][0] + a[2][1] * a[1][2] * a[0][0] + a[1][0] * a[0][1] * a[2][2])
     return res
 
 
-# умножение матриц
-a1 = matrix(3, 2)
-a2 = matrix(2, 3)
-print_m(a1)
-print('*')
-print_m(a2)
-print('=')
-print_m(mult_m(a1, a2))
-print()
+def input_num(num: int):
+    '''
+    Функция ввода команд
+    '''
+    num = int(input('Введите номер команды: '\
+    '1 - cложение матриц'\
+    '2 - вычитание матриц'\
+    '3 - умножение матриц'\
+    '4 - умножение матрицы на число'\
+    '5 - определитель матрицы 2 порядка'\
+    '6 - определитель матрицы 3 порядка'))
 
-# Вычитание матриц
-b1 = matrix(3, 3)
-b2 = matrix(3, 3)
-print_m(b1)
-print('-')
-print_m(b2)
-print('=')
-print_m(minus_m(b1, b2))
-print()
 
-# Умножение матрицы на число
-c1 = matrix(4, 2)
-c2 = 5
-print_m(c1)
-print('*')
-print(c2)
-print('=')
-print_m(mult_m_2(c1, c2))
-print()
+    # умножение матриц
+    a1 = matrix(3, 2)
+    a2 = matrix(2, 3)
+    print_m(a1)
+    print('*')
+    print_m(a2)
+    print('=')
+    print_m(mult_m(a1, a2))
+    print()
 
-# Определитель 2 порядка
-d1 = matrix(2, 2)
-print_m(d1)
-print('определитель матрицы равен =', opred_2(d1))
-print()
+    # Вычитание матриц
+    b1 = matrix(3, 3)
+    b2 = matrix(3, 3)
+    print_m(b1)
+    print('-')
+    print_m(b2)
+    print('=')
+    print_m(minus_m(b1, b2))
+    print()
 
-# Определитель 3 порядка
-e1 = matrix(3, 3)
-print_m(e1)
-print('определитель матрицы равен =', opred_3(e1))
+    # Умножение матрицы на число
+    c1 = matrix(4, 2)
+    c2 = 5
+    print_m(c1)
+    print('*')
+    print(c2)
+    print('=')
+    print_m(mult_m_2(c1, c2))
+    print()
+
+    # Определитель 2 порядка
+    d1 = matrix(2, 2)
+    print_m(d1)
+    print('определитель матрицы равен =', opred_2(d1))
+    print()
+
+    # Определитель 3 порядка
+    e1 = matrix(3, 3)
+    print_m(e1)
+    print('определитель матрицы равен =', opred_3(e1))
