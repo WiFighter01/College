@@ -27,7 +27,7 @@ class Complex:
     #     return self
 
     def __str__(self):  # вывод в print
-        return f'{self.__re} {'+' if self.__im >= 0 else '-'} i {abs(self.__im)}'
+        return f'{self.__re} {"+" if self.__im >= 0 else "-"} i {abs(self.__im)}'
 
     def __add__(self, right):  # self + right
         return Complex(self.__re + right.__re, self.__im + right.__im)
