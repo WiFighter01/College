@@ -23,14 +23,14 @@ class Fractions:
     def get_fractions(self):
         return f'{self.__num}/{self.__den}'
 
+    @staticmethod
     # Нахождение общего наименьщего делителя
-    # Пока не придумал зачем мне это здесь
-    # def getFastNOD(a, b):
-    #     if a < b:
-    #         a, b = b, a
-    #     while b:
-    #         a, b = b, a % b
-    #     return a
+    def __get_fast_nod(a, b):
+        if a < b:
+            a, b = b, a
+        while b:
+            a, b = b, a % b
+        return int(a)
 
     # Функция печати экземпляра класса
     def __str__(self):
@@ -38,7 +38,11 @@ class Fractions:
 
     # Функция сложения дробей
     def __add__(self, right):
-        pass
+        self.new_num = self.__num * right.__den + right.__num * self.__den
+        self.new_den = self.__den * right.__den
+        self.nod = self.__get_fast_nod(self.new_num, self.new_den)
+        return Fractions(int(self.new_num / self.nod), int(self.new_den / self.nod))
+
 
     # Функция вычитания дробей
     def __sub__(self, right):
@@ -56,7 +60,12 @@ class Fractions:
 d1 = Fractions(1, 2)
 d2 = Fractions(3, 9)
 d1.set_fractions(5, 10)
-print(d1.get_fractions())
-print(d2.get_fractions())
-print(d1)
-print(d2)
+d3 = Fractions(7, 8)
+d4 = Fractions(12, 13)
+# print(d1.get_fractions())
+# print(d2.get_fractions())
+# print(d1)
+# print(d2)
+# print()
+print(d2 + d1)
+print(d3 + d4)
