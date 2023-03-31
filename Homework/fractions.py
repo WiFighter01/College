@@ -46,15 +46,24 @@ class Fractions:
 
     # Функция вычитания дробей
     def __sub__(self, right):
-        pass
+        self.new_num = self.__num * right.__den - right.__num * self.__den
+        self.new_den = self.__den * right.__den
+        self.nod = self.__get_fast_nod(self.new_num, self.new_den)
+        return Fractions(int(self.new_num / self.nod), int(self.new_den / self.nod))
 
     # Функция умножения дробей
     def __mul__(self, right):
-        pass
+        self.new_num = self.__num * right.__num
+        self.new_den = self.__den * right.__den
+        self.nod = self.__get_fast_nod(self.new_num, self.new_den)
+        return Fractions(int(self.new_num / self.nod), int(self.new_den / self.nod))
 
     # Функция деления дробей
     def __truediv__(self, right):
-        pass
+        self.new_num = self.__num * right.__den
+        self.new_den = self.__den * right.__num
+        self.nod = self.__get_fast_nod(self.new_num, self.new_den)
+        return Fractions(int(self.new_num / self.nod), int(self.new_den / self.nod))
 
 
 d1 = Fractions(1, 2)
@@ -69,3 +78,9 @@ d4 = Fractions(12, 13)
 # print()
 print(d2 + d1)
 print(d3 + d4)
+print(d1 - d2)
+print(d3 - d4)
+print(d2 * d1)
+print(d3 * d4)
+print(d2 / d1)
+print(d3 / d4)
