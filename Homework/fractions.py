@@ -1,4 +1,5 @@
 class Fractions:
+    __TYPE_T = (int,)
 
     # Инициализация идет с помощью сеттера
     def __init__(self, num, den):
@@ -7,7 +8,7 @@ class Fractions:
     # классовый метод проверки типа числа
     @classmethod
     def __check_value(cls, num, den):
-        if type(num) == int and type(den) == int and den != 0:
+        if type(num) in cls.__TYPE_T and type(den) in cls.__TYPE_T and den != 0:
             return type(num), type(den)
 
     # Сеттер
@@ -43,7 +44,6 @@ class Fractions:
         self.nod = self.__get_fast_nod(self.new_num, self.new_den)
         return Fractions(int(self.new_num / self.nod), int(self.new_den / self.nod))
 
-
     # Функция вычитания дробей
     def __sub__(self, right):
         self.new_num = self.__num * right.__den - right.__num * self.__den
@@ -65,22 +65,97 @@ class Fractions:
         self.nod = self.__get_fast_nod(self.new_num, self.new_den)
         return Fractions(int(self.new_num / self.nod), int(self.new_den / self.nod))
 
+    # Функция сравнения <=:
+    def __le__(self, right):
+        self.num1 = self.__num * right.__den
+        self.num2 = self.__den * right.__num
+        if self.num1 <= self.num2:
+            return True
+        else:
+            return False
 
-# d1 = Fractions(1, 2)
-# d2 = Fractions(3, 9)
-# d1.set_fractions(5, 10)
-# d3 = Fractions(7, 8)
-# d4 = Fractions(12, 13)
+    # Функция сравнения >=:
+    def __ge__(self, right):
+        self.num1 = self.__num * right.__den
+        self.num2 = self.__den * right.__num
+        if self.num1 >= self.num2:
+            return True
+        else:
+            return False
+
+    # Функция сравнения <:
+    def __lt__(self, right):
+        self.num1 = self.__num * right.__den
+        self.num2 = self.__den * right.__num
+        if self.num1 < self.num2:
+            return True
+        else:
+            return False
+
+    # Функция сравнения >:
+    def __gt__(self, right):
+        self.num1 = self.__num * right.__den
+        self.num2 = self.__den * right.__num
+        if self.num1 > self.num2:
+            return True
+        else:
+            return False
+
+    # Функция сравнения ==:
+    def __eq__(self, right):
+        self.num1 = self.__num * right.__den
+        self.num2 = self.__den * right.__num
+        if self.num1 == self.num2:
+            return True
+        else:
+            return False
+
+    # Функция сравнения =!=:
+    def __ne__(self, right):
+        self.num1 = self.__num * right.__den
+        self.num2 = self.__den * right.__num
+        if self.num1 != self.num2:
+            return True
+        else:
+            return False
+
+
+d1 = Fractions(1, 2)
+d2 = Fractions(3, 9)
+d1.set_fractions(5, 10)
+d3 = Fractions(7, 8)
+d4 = Fractions(12, 13)
+d5 = Fractions(3, 9)
 # print(d1.get_fractions())
-# # print(d2.get_fractions())
-# # print(d1)
-# # print(d2)
-# # print()
-# print(d2 + d1)
-# print(d3 + d4)
-# print(d1 - d2)
-# print(d3 - d4)
-# print(d2 * d1)
-# print(d3 * d4)
-# print(d2 / d1)
-# print(d3 / d4)
+# print(d2.get_fractions())
+# print(d1)
+# print(d2)
+# print()
+print('d2 + d1:')
+print(d2 + d1)
+print('d3 + d4:')
+print(d3 + d4)
+print('d1 - d2:')
+print(d1 - d2)
+print('d3 - d4:')
+print(d3 - d4)
+print('d2 * d1:')
+print(d2 * d1)
+print('d3 * d4:')
+print(d3 * d4)
+print('d2 / d1:')
+print(d2 / d1)
+print('d3 / d4:')
+print(d3 / d4)
+print('d1 <= d2:')
+print(d1 <= d2)
+print('d1 >= d2:')
+print(d1 >= d2)
+print('d1 < d2:')
+print(d1 < d2)
+print('d1 > d2:')
+print(d1 > d2)
+print('d2 == d5:')
+print(d2 == d5)
+print('d2 != d5:')
+print(d1 != d2)
