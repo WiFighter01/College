@@ -154,7 +154,6 @@ class Fractions:
             return False
 
 
-
 d1 = Fractions(1, 2)
 d2 = Fractions(3, 9)
 d1.set_fractions(5, 10)
