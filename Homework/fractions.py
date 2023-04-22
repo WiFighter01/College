@@ -11,6 +11,44 @@ class Fractions:
         if type(num) in cls.__TYPE_T and type(den) in cls.__TYPE_T and den != 0:
             return type(num), type(den)
 
+    @classmethod
+    def __check_num_value(cls, num):
+        if type(num) in cls.__TYPE_T:
+            return type(num)
+        else:
+            raise ValueError('Числитель должен быть типа int')
+
+    @classmethod
+    def __check_den_value(cls, den):
+        if type(den) in cls.__TYPE_T and den != 0:
+            return type(den)
+        else:
+            raise ValueError('Знаменатель должен быть типа int и не равен 0')
+
+    # Свойство числителя
+    @property
+    def num(self):
+        return self.__num
+
+    # Сеттер числителя
+    @num.setter
+    def num(self, val):
+        if self.__check_num_value(val):
+            self.__num = val
+
+    @property
+    def den(self):
+        return self.__den
+
+    @den.setter
+    def den(self, val):
+        if self.__check_den_value(val):
+            self.__den = val
+
+    # Геттер
+    def get_fractions(self):
+        return f'{self.__num}/{self.__den}'
+
     # Сеттер
     def set_fractions(self, num, den):
         if self.__check_value(num, den):
@@ -19,10 +57,6 @@ class Fractions:
         else:
             raise ValueError('У числителя и знаменателя должен быть тип "int", и '
                              'знаменатель не может быть равен "0"')
-
-    # Геттер
-    def get_fractions(self):
-        return f'{self.__num}/{self.__den}'
 
     @staticmethod
     # Нахождение общего наименьщего делителя
