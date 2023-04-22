@@ -5,7 +5,6 @@ class Fractions:
     def __init__(self, num, den):
         self.set_fractions(num, den)
 
-
     # классовый метод проверки типа числа
     @classmethod
     def __check_value(cls, num, den):
