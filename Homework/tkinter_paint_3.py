@@ -10,15 +10,12 @@ class MyPaint:
         self.brush_color = brush_color
         self.root.resizable(0, 0)
 
+        # Вызов виджетов
         self.create_widgets()
 
     def create_widgets(self):
         # Создание канвы
-        self.w = Canvas(self.root, width=self.geometry.split('x')[0], height=self.geometry.split('x')[1], bg='white')
-        self.w.bind('<B1-Motion>', self.paint)
-        self.w.grid(row=2, column=0, columnspan=8, padx=5, pady=5, sticky=E + W + S + N)
-        self.w.columnconfigure(6, weight=1)
-        self.w.rowconfigure(2, weight=1)
+        self.create_canvas()
 
         # Кнопки изменения цвета кисти
         red_btn = Button(text='красный', width=10, command=lambda: self.brush_color_change('red'))
@@ -37,16 +34,25 @@ class MyPaint:
         twenty_btn = Button(text='20', width=10, command=lambda: self.brush_size_change(20))
 
         # Размещаем кнопки в конве
-        red_btn.grid(row=0, column=0)
-        black_btn.grid(row=1, column=0)
-        green_btn.grid(row=0, column=1)
-        yellow_btn.grid(row=1, column=1)
-        one_btn.grid(row=0, column=3)
-        five_btn.grid(row=0, column=4)
-        ten_btn.grid(row=1, column=3)
-        twenty_btn.grid(row=1, column=4)
-        white_btn.grid(row=0, column=6)
-        clear_all.grid(row=1, column=6)
+        red_btn.grid(row=0, column=0, sticky=EW)
+        black_btn.grid(row=1, column=0, sticky=EW)
+        green_btn.grid(row=0, column=1, sticky=EW)
+        yellow_btn.grid(row=1, column=1, sticky=EW)
+        one_btn.grid(row=0, column=3, sticky=EW)
+        five_btn.grid(row=0, column=4, sticky=EW)
+        ten_btn.grid(row=1, column=3, sticky=EW)
+        twenty_btn.grid(row=1, column=4, sticky=EW)
+        white_btn.grid(row=0, column=6, sticky=EW)
+        clear_all.grid(row=1, column=6, sticky=EW)
+
+    # Создание канвы
+    def create_canvas(self):
+        width, height = map(int, self.geometry.split('x'))
+        self.w = Canvas(self.root, width=width, height=height, bg='white')
+        self.w.bind('<B1-Motion>', self.paint)
+        self.w.grid(row=2, column=0, columnspan=8, padx=5, pady=5, sticky=E + W + S + N)
+        self.w.columnconfigure(6, weight=1)
+        self.w.rowconfigure(2, weight=1)
 
     # Рисовальщик
     def paint(self, event):
@@ -66,8 +72,8 @@ class MyPaint:
 
 
 def main():
-    paint = MyPaint()
-    paint.root.mainloop()
+    app = MyPaint()
+    app.root.mainloop()
 
 
 if __name__ == '__main__':
