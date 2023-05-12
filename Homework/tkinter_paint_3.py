@@ -9,7 +9,7 @@ class MyPaint:
         self.brush_size = brush_size
         self.brush_color = brush_color
         self.draw_mode = 'brush'  # Режим рисования по умолчанию - кисть
-        self.is_drawing = False # Инициализация переменной состояния рисования
+        self.is_drawing = False  # Инициализация переменной состояния рисования
         self.root.resizable(0, 0)
 
         # Вызов виджетов
@@ -40,6 +40,11 @@ class MyPaint:
         brush_mode_btn = Button(text='кисть', width=10, command=lambda: self.set_draw_mode('brush'))
         line_mode_btn = Button(text='линия', width=10, command=lambda: self.set_draw_mode('line'))
 
+        # Создание выпадающего меню
+        self.draw_menu = Menu(self.root, tearoff=0)
+        self.draw_menu.add_command(label='прямоугольник', command=lambda: self.set_draw_mode('rectangle'))
+        self.draw_menu.add_command(label='многоугольник', command=lambda: self.set_draw_mode('polygon'))
+
         # Размещаем кнопки в конве
         red_btn.grid(row=0, column=0, sticky=EW)
         black_btn.grid(row=1, column=0, sticky=EW)
@@ -51,22 +56,25 @@ class MyPaint:
         twenty_btn.grid(row=1, column=4, sticky=EW)
         white_btn.grid(row=0, column=6, sticky=EW)
         clear_all.grid(row=1, column=6, sticky=EW)
-        brush_mode_btn.grid(row=2, column=0, sticky=EW)
-        line_mode_btn.grid(row=2, column=1, sticky=EW)
+        brush_mode_btn.grid(row=3, column=0, sticky=EW)
+        line_mode_btn.grid(row=3, column=1, sticky=EW)
 
     # Привязка действий к кнопкам
     def setup_bindings(self):
         self.w.bind('<B1-Motion>', self.paint)
         self.w.bind('<Button-1>', self.start_line)
         self.w.bind('<ButtonRelease-1>', self.end_line)
+        self.w.bind('<Button-3>', self.show_menu)
+        self.w.bind('<Button-1>', self.start_rectangle, '+')
+        self.w.bind('<ButtonRelease-1>', self.end_rectangle, '+')
 
     # Создание канвы
     def create_canvas(self):
         width, height = map(int, self.geometry.split('x'))
         self.w = Canvas(self.root, width=width, height=height, bg='white')
-        self.w.grid(row=3, column=0, columnspan=8, padx=5, pady=5, sticky=E + W + S + N)
+        self.w.grid(row=4, column=0, columnspan=8, padx=5, pady=5, sticky=E + W + S + N)
         self.w.columnconfigure(6, weight=1)
-        self.w.rowconfigure(3, weight=1)
+        self.w.rowconfigure(4, weight=1)
 
     # Рисовальщик
     def paint(self, event):
@@ -76,9 +84,6 @@ class MyPaint:
             y1 = event.y - self.brush_size / 2
             y2 = event.y + self.brush_size / 2
             self.w.create_oval(x1, y1, x2, y2, fill=self.brush_color, outline=self.brush_color)
-        # elif self.draw_mode == 'line':
-        #     if self.is_drawing:
-        #         self.end_line(event)
 
     # Начало рисования линии
     def start_line(self, event):
@@ -96,9 +101,26 @@ class MyPaint:
             self.w.create_line(x1, y1, x2, y2, fill=self.brush_color, width=self.brush_size)
             self.is_drawing = False
 
+    def start_rectangle(self, event):
+        if self.draw_mode == 'rectangle' and not self.is_drawing:
+            self.start_x, self.start_y = event.x, event.y
+            self.is_drawing = True
+
+    def end_rectangle(self, event):
+        if self.draw_mode == 'rectangle' and self.is_drawing:
+            x1 = self.start_x
+            y1 = self.start_y
+            x2 = event.x
+            y2 = event.y
+            self.w.create_rectangle(x1, y1, x2, y2, fill='', outline=self.brush_color, width=self.brush_size)
+            self.is_drawing = False
+
     # Изменения режима рисования
     def set_draw_mode(self, mode):
         self.draw_mode = mode
+
+    def show_menu(self, event):
+        self.draw_menu.post(event.x_root, event.y_root)
 
     # Изменение размера кисти
     def brush_size_change(self, new_size):
