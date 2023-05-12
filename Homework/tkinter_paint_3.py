@@ -43,7 +43,7 @@ class MyPaint:
         # Создание выпадающего меню
         self.draw_menu = Menu(self.root, tearoff=0)
         self.draw_menu.add_command(label='прямоугольник', command=lambda: self.set_draw_mode('rectangle'))
-        self.draw_menu.add_command(label='многоугольник', command=lambda: self.set_draw_mode('polygon'))
+        # self.draw_menu.add_command(label='треугольник', command=lambda: self.set_draw_mode('triangle'))
 
         # Размещаем кнопки в конве
         red_btn.grid(row=0, column=0, sticky=EW)
@@ -67,6 +67,9 @@ class MyPaint:
         self.w.bind('<Button-3>', self.show_menu)
         self.w.bind('<Button-1>', self.start_rectangle, '+')
         self.w.bind('<ButtonRelease-1>', self.end_rectangle, '+')
+        # self.w.bind('<Button-1>', self.start_triangle, '+')
+        # self.w.bind('<Button-1>', self.continue_triangle, '+')
+        # self.w.bind('<Button-1>', self.end_triangle, '+')
 
     # Создание канвы
     def create_canvas(self):
@@ -114,6 +117,32 @@ class MyPaint:
             y2 = event.y
             self.w.create_rectangle(x1, y1, x2, y2, fill='', outline=self.brush_color, width=self.brush_size)
             self.is_drawing = False
+
+    # def start_triangle(self, event):
+    #     if self.draw_mode == 'triangle' and not self.is_drawing:
+    #         self.start_x, self.start_y = event.x, event.y
+    #         self.is_drawing = True
+    #         self.continue_x = None  # Сброс координат продолжения треугольника
+    #         self.continue_y = None
+    #
+    # def continue_triangle(self, event):
+    #     if self.draw_mode == 'triangle' and self.is_drawing:
+    #         if self.continue_x is not None and self.continue_y is not None:
+    #             self.w.delete('temp_triangle')
+    #             self.w.create_polygon(self.start_x, self.start_y, self.continue_x, self.continue_y, event.x, event.y,
+    #                                   fill='', outline=self.brush_color, width=self.brush_size, tags='temp_triangle')
+    #         self.continue_x, self.continue_y = event.x, event.y
+    #
+    # def end_triangle(self, event):
+    #     if self.draw_mode == 'triangle' and self.is_drawing:
+    #         x1 = self.start_x
+    #         y1 = self.start_y
+    #         x2 = self.continue_x
+    #         y2 = self.continue_y
+    #         x3 = event.x
+    #         y3 = event.y
+    #         self.w.create_polygon(x1, y1, x2, y2, x3, y3, fill='', outline=self.brush_color, width=self.brush_size)
+    #         self.is_drawing = False
 
     # Изменения режима рисования
     def set_draw_mode(self, mode):
