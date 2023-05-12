@@ -9,14 +9,12 @@ class MyPaint:
         self.brush_size = brush_size
         self.brush_color = brush_color
         self.draw_mode = 'brush'  # Режим рисования по умолчанию - кисть
+        self.is_drawing = False # Инициализация переменной состояния рисования
         self.root.resizable(0, 0)
 
         # Вызов виджетов
         self.create_widgets()
         self.setup_bindings()
-
-        # Список для хранения временных линий
-        self.temp_lines = []
 
     def create_widgets(self):
         # Создание канвы
@@ -73,38 +71,30 @@ class MyPaint:
     # Рисовальщик
     def paint(self, event):
         if self.draw_mode == 'brush':
-            x1 = event.x - self.brush_size
-            x2 = event.x + self.brush_size
-            y1 = event.y - self.brush_size
-            y2 = event.y + self.brush_size
+            x1 = event.x - self.brush_size / 2
+            x2 = event.x + self.brush_size / 2
+            y1 = event.y - self.brush_size / 2
+            y2 = event.y + self.brush_size / 2
             self.w.create_oval(x1, y1, x2, y2, fill=self.brush_color, outline=self.brush_color)
-        elif self.draw_mode == 'line':
-            self.w.delete('temp_line')
-            x1 = self.start_x
-            y1 = self.start_y
-            x2 = event.x
-            y2 = event.y
-            self.create_temp_line(x1, y1, x2, y2)
+        # elif self.draw_mode == 'line':
+        #     if self.is_drawing:
+        #         self.end_line(event)
 
     # Начало рисования линии
     def start_line(self, event):
-        self.start_x, self.start_y = event.x, event.y
+        if self.draw_mode == 'line' and not self.is_drawing:
+            self.start_x, self.start_y = event.x, event.y
+            self.is_drawing = True
 
     # Окончание рисования линии
     def end_line(self, event):
-        if self.draw_mode == 'line':
+        if self.draw_mode == 'line' and self.is_drawing:
             x1 = self.start_x
             y1 = self.start_y
             x2 = event.x
             y2 = event.y
-            self.create_temp_line(x1, y1, x2, y2)
-            self.start_x = x2  # Сохраняем конечные координаты линии как новые начальные
-            self.start_y = y2
-
-    # Создание временной линии
-    def create_temp_line(self, x1, y1, x2, y2):
-        self.w.create_line(x1, y1, x2, y2, fill=self.brush_color, width=self.brush_size, tags='temp_line')
-        self.temp_lines.append('temp_line')
+            self.w.create_line(x1, y1, x2, y2, fill=self.brush_color, width=self.brush_size)
+            self.is_drawing = False
 
     # Изменения режима рисования
     def set_draw_mode(self, mode):
