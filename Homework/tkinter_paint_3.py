@@ -5,15 +5,21 @@ import os
 
 
 class MyPaint:
-    def __init__(self, root=Tk(), title='Paint', geometry='1280x720', brush_size=1, brush_color='black'):
-        self.root = root
+    def __init__(self, title='Paint', geometry='1280x720'):
+        self.root = Tk()
         self.title = title
         self.geometry = geometry
-        self.brush_size = brush_size
-        self.brush_color = brush_color
+        self.brush_size = 1
+        self.brush_color = 'black'
         self.draw_mode = 'brush'  # Режим рисования по умолчанию - кисть
         self.is_drawing = False  # Инициализация переменной состояния рисования
         self.root.resizable(False, False)
+
+        # Установка заголовка окна
+        self.root.title(self.title)
+
+        # Установка геометрии окна
+        self.root.geometry(self.geometry)
 
         # Вызов виджетов
         self.create_widgets()
@@ -66,6 +72,7 @@ class MyPaint:
         label1.grid(row=0, columnspan=7, sticky=EW)
         label2.grid(row=2, columnspan=7, sticky=EW)
         label3.grid(row=5, columnspan=7, sticky=EW)
+
         # Размещаем кнопки в конве
         red_btn.grid(row=3, column=2, sticky=EW)
         black_btn.grid(row=4, column=2, sticky=EW)
@@ -84,7 +91,7 @@ class MyPaint:
         triangle_btn.grid(row=6, column=3, sticky=EW)
         save_img_btn.grid(row=1, column=0, sticky=EW)
 
-    # Привязка действий к кнопкам
+    # Привязка действий к кнопкам мыши
     def setup_bindings(self):
         self.w.bind('<B1-Motion>', self.paint)
         self.w.bind('<Button-1>', self.start_line)
@@ -99,13 +106,13 @@ class MyPaint:
 
     # Создание канвы
     def create_canvas(self):
-        width, height = map(int, self.geometry.split('x'))
+        width, height = self.geometry.split('x')
         self.w = Canvas(self.root, width=width, height=height, bg='white')
         self.w.grid(row=7, column=0, columnspan=7, padx=5, pady=5, sticky=E + W + S + N)
         self.w.columnconfigure(6, weight=1)
         self.w.rowconfigure(4, weight=1)
 
-    # Рисовальщик
+    # Рисовальщик кистью
     def paint(self, event):
         if self.draw_mode == 'brush':
             x1 = event.x - self.brush_size / 2
@@ -180,6 +187,7 @@ class MyPaint:
             self.w.create_polygon(x1, y1, x2, y2, x3, y3, fill='', outline=self.brush_color, width=self.brush_size)
             self.is_drawing = False
 
+    # Сохранение изображения
     def save_image(self):
         file_path = filedialog.asksaveasfile(defaultextension='.png', filetypes=[('PNG', '*.png'), ('JPEG', '*.jpg')])
         if file_path:
@@ -199,6 +207,7 @@ class MyPaint:
     def set_draw_mode(self, mode):
         self.draw_mode = mode
 
+    # Открытие меню на месте нахождения указателя мыши
     def show_menu(self, event):
         self.draw_menu.post(event.x_root, event.y_root)
 
