@@ -13,10 +13,13 @@ def create_connection(db, user, password, host, port):
             host=host,
             port=port
         )
-        print('Успешное подключение к базе данных Белпочты')
+        print('Соединение с базой данных Белпочты установлено')
         print()
     except OperationalError as e:
         print(f'The error "{e}" occurred')
+        print('Соединение с базой данных Белпочты НЕ установлено!\n'
+              'Все внесенные изменения не будут сохранены!\n'
+              'Подключите базу данных!')
         print()
 
     return connection
@@ -290,5 +293,14 @@ def start_program():
                     command = 'exit'
 
 
+def eng_program():
+    if connection:
+        connection.close()
+        print('Соединение с базой данный закрыто')
+    else:
+        print('Соединение с базой данных не было установлено. Программа закрыта')
+
+
 connection = create_connection('bel_post_2', 'postgres', '1234', '127.0.0.1', '5432')
 start_program()
+eng_program()
