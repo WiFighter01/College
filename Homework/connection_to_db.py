@@ -1,5 +1,6 @@
 import psycopg2
-from psycopg2 import Error, OperationalError, ProgrammingError
+from psycopg2 import OperationalError, ProgrammingError
+from tabulate import tabulate
 
 
 # Функций подключения
@@ -13,10 +14,10 @@ def create_connection(db, user, password, host, port):
             host=host,
             port=port
         )
-        print('Соединение с базой данных Белпочты установлено')
+        print('Соединение с базой данных Белпочты установлено.')
         print()
     except OperationalError as e:
-        print(f'The error "{e}" occurred')
+        print(f'Произошла ошибка "{e}"')
         print('Соединение с базой данных Белпочты НЕ установлено!\n'
               'Все внесенные изменения не будут сохранены!\n'
               'Подключите базу данных!')
@@ -38,7 +39,7 @@ def execute_query(connection, query):
         connection.commit()
         print('Ваш запрос выполнен')
     except OperationalError as e:
-        print(f'The error "{e}" occurred')
+        print(f'Произошла ошибка "{e}"')
 
 
 def fetchall_query(connection, query):
@@ -52,13 +53,15 @@ def fetchall_query(connection, query):
         cursor.execute(query)
         connection.commit()
         try:
+            columns = [desc[0] for desc in cursor.description]
             record = cursor.fetchall()
-            for rec in record:
-                print(rec)
+            print(tabulate(record, headers=columns, tablefmt='psql'))
+            # for rec in record:
+            #     print(rec)
         except ProgrammingError as e:
-            print(f'The error "{e}" occurred')
+            print(f'Произошла ошибка "{e}"')
     except OperationalError as e:
-        print(f'The error "{e}" occurred')
+        print(f'Произошла ошибка "{e}"')
 
 
 # Главное меню программы
@@ -103,9 +106,17 @@ def del_poluchatel():
 
 
 def choose_poluchatel():
-    kod_poluchatelya = input('Введите код получателя, информацию о котором вы хотите узнать: ')
-    query = f"SELECT * FROM poluchatel WHERE kod_poluchatelya = {kod_poluchatelya};"
-    return query
+    flag = True
+    while flag:
+        kod_poluchatelya = input('Введите код получателя, информацию о котором вы хотите узнать: ')
+        if kod_poluchatelya.isdigit():
+            query = f"SELECT * FROM poluchatel WHERE kod_poluchatelya = {kod_poluchatelya};"
+            flag = False
+            return query
+        else:
+            flag = True
+            print('Команда не найдена')
+            print()
 
 
 def all_poluchatel():
@@ -131,11 +142,11 @@ def new_podpiska():
     kod_poluchatelya = input('Введите код получателя: ')
     idx_izdaniya = input('Введите индекс издания: ')
     srok_podpiski = input('Введите срок подписки: ')
-    while srok_podpiski not in (1, 3, 6):
+    while srok_podpiski not in ('1', '3', '6'):
         print('Доступный срок подписки: 1, 3 или 6 месяцев\n')
         srok_podpiski = input('Введите срок подписки: ')
     month = input('Введите месяц начала доставки издания: ')
-    while month not in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12):
+    while month not in ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'):
         print('Диапазон месяцев от 1 до 12\n')
         month = input('Введите месяц начала доставки издания: ')
     year = input('Введите год начала доставки издания: ')
@@ -237,6 +248,10 @@ def start_program():
                     break
                 elif command == 'exit':
                     command = 'exit'
+                elif command not in (1, 2, 3, 4, 5):
+                    print('Команда не найдена')
+                    print()
+                    command = menu_poluchateli()
         # Вызываем подменю "Подписки"
         elif command == '2':
             command = menu_podpiski()
@@ -264,6 +279,10 @@ def start_program():
                     break
                 elif command == 'exit':
                     command = 'exit'
+                elif command not in (1, 2, 3, 4, 5):
+                    print('Команда не найдена')
+                    print()
+                    command = menu_poluchateli()
         # Вызываем подменю "Издания"
         elif command == '3':
             command = menu_izdaniya()
@@ -291,6 +310,10 @@ def start_program():
                     break
                 elif command == 'exit':
                     command = 'exit'
+                elif command not in (1, 2, 3, 4, 5):
+                    print('Команда не найдена')
+                    print()
+                    command = menu_poluchateli()
 
 
 def eng_program():
