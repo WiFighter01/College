@@ -3,6 +3,8 @@ import sort_algo as s
 import search_algo as se
 
 
+# Используем декоратор для функции test_sorting_algo чтобы
+# поочередно протестировать функции указанные в декораторе
 @pytest.mark.parametrize('sorting_function', [
     s.selection_sort,
     s.insertion_sort,
@@ -18,6 +20,8 @@ def test_sorting_algo(sorting_function):
     assert sorted_arr == [3, 3, 5, 6, 10, 11, 24]
 
 
+# Используем декоратор для функции test_searching_algo чтобы
+# поочередно протестировать функции указанные в декораторе
 @pytest.mark.parametrize('searching_function', [
     se.binary_search,
     se.fibonacci_search,
@@ -31,4 +35,3 @@ def test_searching_algo(searching_function):
     res_ind2 = searching_function(arr, value2)
     assert res_ind1 == 3
     assert res_ind2 is None
-
