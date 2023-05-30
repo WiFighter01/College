@@ -29,6 +29,5 @@ def execute_query(connection, query):
         print(f'The error "{e}" occured')
 
 
-c = create_connection('postgres', 'postgres', '1234', '127.0.0.1', '5432')
+c = create_connection('bel_post_2', 'postgres', '1234', '127.0.0.1', '5432')
 execute_query(c, 'CREATE DATABASE simple')
-
