@@ -49,9 +49,9 @@ class TestMatrixFunctions(unittest.TestCase):
 
     # Тестирование умножения матрицы на число
     def test_mult_m_2(self):
-        # Матрица 2х2 умножается на чило 5
+        # Матрица 2х2 умножается на чиcло 5
         self.assertListEqual(matrix.mult_m_2([[1, 1], [1, 1]], 5), [[5, 5], [5, 5]])
-        # Матрица 4х2 умножается на чило -2
+        # Матрица 4х2 умножается на чиcло -2
         self.assertListEqual(matrix.mult_m_2([[0, 1], [2, 3], [4, 5], [6, 7]], -2),
                              [[0, -2], [-4, -6], [-8, -10], [-12, -14]])
 
@@ -69,7 +69,7 @@ class TestMatrixFunctions(unittest.TestCase):
     def test_matrix_equal(self):
         # Матрицы 2х2
         self.assertTrue(matrix.matrix_equal(self.a, self.b))
-        # Матрицы 4х3
+        # Матрицы 4х4
         self.assertTrue(matrix.matrix_equal([[0, 0, 0, 0], [1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3]],
                                             [[9, 9, 9, 9], [1, 1, 1, 1], [5, 5, 5, 5], [0, 0, 0, 0]]))
 
