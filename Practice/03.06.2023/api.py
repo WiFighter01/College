@@ -13,6 +13,8 @@ print()
 
 print('Задача 2')
 # Задача 2
+# Можно также решить с параметрами
+# param = {'search': 'Millennium Falcon'}
 response = requests.get('https://swapi.dev/api/starships')
 print(response)
 json = response.json()
