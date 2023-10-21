@@ -24,11 +24,14 @@ class Stack:
                 self.stack_max[0] = item
 
     def get_max(self):
-        return self.stack_max[0]
+        if len(self.stack_max) == 0:
+            return  None
+        else:
+            return self.stack_max[0]
 
 
 s = Stack()
-
+print("Максимум в стеке: ", s.get_max())
 s.push(1)
 s.push(7)
 s.push(100)
