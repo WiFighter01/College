@@ -25,7 +25,7 @@ class Stack:
 
     def get_max(self):
         if len(self.stack_max) == 0:
-            return  None
+            return None
         else:
             return self.stack_max[0]
 
