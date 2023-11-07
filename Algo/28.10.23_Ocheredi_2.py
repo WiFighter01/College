@@ -37,14 +37,16 @@ class Que:
 
 if __name__ == '__main__':
     que = Que()
+    # que.push(1)
+    # que.front()
+    # que.exit()
+    # print()
     que.size()
-    que.front()
-    que.pop()
     que.push(1)
     que.size()
     que.push(2)
     que.size()
     que.push(3)
     que.size()
-    que.front()
     que.exit()
+
